@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Html2Pdf.Lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,6 +13,13 @@ namespace Html2Pdf.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public async Task<ActionResult> DownloadHomePageAsPdf()
+        {
+            var bytes = await TheMagic.Go($"{Request.Url.GetLeftPart(UriPartial.Authority)}/Home");
+
+            return File(bytes, "application/pdf");
         }
 
         public ActionResult About()
